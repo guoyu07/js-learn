@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Vue.js</title>
+<script src="./vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+	{{message}}
+</div>
+<div id="app-2">
+  <span v-bind:title="message">
+    鼠标悬停几秒钟查看此处动态绑定的提示信息！
+  </span>
+</div>
+
+<div id="app-3">
+  <p v-if="seen">现在你看到我了</p>
+</div>
+
+<div id="app-4">
+  <ol>
+    <li v-for="todo in todos">
+      {{ todo.text }}
+    </li>
+  </ol>
+</div>
+
+<div id="app-5">
+  <p>{{ message }}</p>
+  <button v-on:click="reverseMessage">逆转消息</button>
+</div>
+<div id="app-6">
+  <p>{{ message }}</p>
+  <input v-model="message">
+</div>
+
+<p id="app-7">Using mustaches: {{ rawHtml }}</p>
+<p id="app-8">Using v-html directive: <span v-html="rawHtml"></span></p>
+<p id="app-9" v-bind:name="aa">指令测试</p>
+
+<div id="app-10">
+  <p>Original message: "{{ message }}"</p>
+  <p>Computed reversed message: "{{ reversedMessage }}"</p>
+</div>
+
+<div id="app-11">
+  <p>
+    Ask a yes/no question:
+    <input v-model="question">
+  </p>
+  <p>{{ answer }}</p>
+</div>
+
+<div id="app-12" v-bind:class="classObj">Class和Style绑定</div>
+<h1 id="app-13"  v-if="ok">Yes</h1>
+<ul id="app-14">
+  <li v-for="(item,index) in items">
+    {{ item.message }} -- {{index}}
+  </li>
+</ul>
+<div id="app-15">
+  <button v-on:click="counter += 1">Add 1</button>
+  <p>The button above has been clicked {{ counter }} times.</p>
+</div>
+
+<div id="app-16">
+  <my-component></my-component>
+</div>
+
+
+<div id="app-17">
+  <span>这是声明周期的测试span</span>
+</div>
+
+<script type="text/javascript">
+
+
+var app = new Vue({
+	el:'#app',
+	data:{
+		message:'hello world!'
+	}
+	
+});
+
+var app2 = new Vue({
+	el:'#app-2',
+	data:{
+		message:'页面加载于' + new Date().toLocaleString()
+	}
+	
+});
+
+
+var app3 = new Vue({
+	el:'#app-3',
+	data:{
+		seen:true
+	}
+	
+});
+
+var app4 = new Vue({
+	el:'#app-4',
+	data:{
+		todos:[
+			{ text: '学习 JavaScript' },
+			{ text: '学习 Vue' },
+			{ text: '整个牛项目' }   
+		 ]
+	}
+	
+});
+
+var app5 = new Vue({
+	el:'#app-5',
+	data:{
+		message:'Hello Vue.js!',
+	},
+	methods:{
+		reverseMessage:function(){
+			 this.message = this.message.split('').reverse().join('')
+		}
+	}
+	
+	
+});
+
+var app6 = new Vue({
+  el: '#app-6',
+  data: {
+    message: 'Hello Vue!'
+  }
+})
+
+//-----Vue实例
+console.info('Vue实例...')
+// 我们的数据对象
+var data = { a: 1 }
+
+// 该对象被加入到一个 Vue 实例中
+var vm = new Vue({
+  data: data
+})
+
+// 他们引用相同的对象！
+console.info(vm.a === data.a) // => true
+
+// 设置属性也会影响到原始数据
+vm.a = 2
+console.info(data.a) // => 2
+
+// ... 反之亦然
+data.a = 3
+console.info(vm.a) // => 3
+console.info(data == vm.$data)
+
+new Vue({
+  data: {
+    a: 10000
+  },
+  created: function () {
+    // `this` 指向 vm 实例
+    console.log('a is: ' + this.a)
+  }
+})
+console.info("模板语法...")
+
+
+var app7 = new Vue({
+  el: '#app-7',
+  data: {
+	  rawHtml: '<span style="color:red">this should be red</span>'
+  }
+})
+
+var app8 = new Vue({
+  el: '#app-8',
+  data: {
+	  rawHtml: '<span style="color:red">this should be red</span>'
+  }
+})
+var app9 = new Vue({
+  el: '#app-9',
+  data: {
+	  aa:'123456'
+  }
+})
+console.info("计算属性和观察者...")
+
+var app10 = new Vue({
+	el: '#app-10',
+	data: {
+	 message:'hello Vue!'
+	},
+  	computed:{
+  		reversedMessage:function(){
+  			return this.message.split('').reverse().join('')
+  		}
+  	}
+})
+var app11 = new Vue({
+	el: '#app-11',
+	data: {
+		question:'',
+		answer:''
+	},
+  	watch:{
+  		question:function(value){
+  			console.info(value)
+  			this.answer = 'loading...'
+  			this.search();
+  		}
+  	},
+  	methods:{
+  		search:function(){
+  			var vm = this;
+  			setTimeout(function(){
+  				vm.answer = 'no :)...';
+  			},4000)
+  		}
+  	}
+})
+console.info("Class与Style绑定...")
+var app12 = new Vue({
+	el: '#app-12',
+	data: {
+		classObj:{
+			color:true
+		}
+	},
+  	methods:{
+  		search:function(){
+  			var vm = this;
+  			setTimeout(function(){
+  				vm.answer = 'no :)...';
+  			},4000)
+  		}
+  	}
+})
+
+console.info("条件渲染...")
+var app13 = new Vue({
+	el: '#app-13',
+	data: {
+		ok:true
+	}
+
+})
+
+console.info("列表渲染...")
+var app14 = new Vue({
+	el: '#app-14',
+	data: {
+		items:[
+			{ message: 'Foo' },
+     		{ message: 'Bar' }  
+		]
+		
+	}
+})
+
+console.info("事件处理...")
+var app15 = new Vue({
+	el: '#app-15',
+	data: {
+		counter:0
+	}
+})
+console.info("表单输入绑定...")
+
+console.info("组件...")
+
+// 注册
+Vue.component('my-component', {
+  template: '<div>A custom component!</div>'
+})
+
+// 创建根实例
+var app16 = new Vue({
+  el: '#app-16'
+})
+
+console.info("声明周期...")
+var app17 = new Vue({
+  //el: '#app-16'
+  template:'<h1>你看到我，表示以前的内容被替换了</h1>',
+  beforeCreate:function(){
+	 console.info('beforeCreate..' + 'this是' + this) 
+  },
+  created:function(){
+	 console.info('created..' + 'this是' + this) 
+  },
+  beforeMount:function(){
+	 console.info('beforeMount..' + 'this是' + this) 
+  },
+  mounted:function(){
+	 console.info('mounted..' + 'this是' + this) 
+  }
+})
+
+setTimeout(function(){
+	app17.$mount('#app-17')
+},3000)
+
+
+</script>
+</body>
+</html>
