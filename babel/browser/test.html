@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>在浏览器直接使用</title>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+
+
+<div id="output"></div>
+
+
+<!-- 你的脚本代码 -->
+<script type="text/babel">
+const getMessage = () => "Hello World";
+document.getElementById('output').innerHTML = getMessage();
+
+import {a,b,c,d,e,five} from './export';
+
+console.info(a)
+console.info(b)
+console.info(c)
+console.info(d)
+console.info(e)
+console.info(five)
+</script>
+</body>
+</html>
