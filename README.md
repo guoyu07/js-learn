@@ -1,10 +1,10 @@
 # 前端相关
 - es6
 
--babel
+- babel
 
--node
+- node
 
--vue
+- vue
 
--webpack
+- webpack
